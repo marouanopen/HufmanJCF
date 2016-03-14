@@ -6,7 +6,7 @@
 package huffman;
 
 /**
- *
+ * 
  * @author marouano
  */
 public class Huffman {
