@@ -5,13 +5,27 @@
  */
 package huffman;
 
+import java.util.Comparator;
+
+
 /**
  *
  * @author marouano
  */
-public class HuffKnoop {
+public class HuffKnoop  {
     public char karakter;
     public int ferquentie;
     public HuffKnoop leftChild, rightChild;
     
+    public HuffKnoop(char karakter, int freq, HuffKnoop left, HuffKnoop right)
+    {
+        this.karakter = karakter;
+        this.ferquentie = freq;
+        this.leftChild = left;
+        this.rightChild = right;
+        
+    }   
+    
 }
+
+
