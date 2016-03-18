@@ -8,7 +8,7 @@ package huffman;
 import java.util.*;
 
 /**
- * 
+ * @author Sibe
  * @author marouano
  */
 public class Huffman {

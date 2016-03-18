@@ -8,7 +8,7 @@ package huffman;
 import java.util.Comparator;
 
 /**
- *
+ * @author marouano
  * @author Sibe
  */
 

@@ -5,17 +5,16 @@
  */
 package huffman;
 
-import java.util.Comparator;
-
 
 /**
- *
+ * @author Sibe
  * @author marouano
  */
-public class HuffKnoop  {
+public class HuffKnoop implements Comparable<HuffKnoop>{
     public char karakter;
     public int ferquentie;
     public HuffKnoop leftChild, rightChild;
+    
     
     public HuffKnoop(char karakter, int freq, HuffKnoop left, HuffKnoop right)
     {
@@ -25,6 +24,11 @@ public class HuffKnoop  {
         this.rightChild = right;
         
     }   
+
+    @Override
+    public int compareTo(HuffKnoop other) {
+        return Integer.compare(this.ferquentie, other.ferquentie);
+    }
     
 }
 
