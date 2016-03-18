@@ -17,6 +17,7 @@ public class Huffman {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         String str = "Lorem ipsum dolor shit mate";
         List<HuffKnoop> HuffArray = new ArrayList<>();
         char[] karakters = str.toLowerCase().toCharArray(); //args.toString().toCharArray();
@@ -26,13 +27,18 @@ public class Huffman {
         
         for (char a : freq.keySet())
         {
-            //HuffKnoop huff = new HuffKnoop(a,freq.get(a));
-            //HuffArray.add(huff);
+            HuffKnoop huff = new HuffKnoop(a,freq.get(a), null, null);
+            HuffArray.add(huff);
         }
-        
+        sorteren(HuffArray);
         
     }
     
+    /**
+     * Counts the ferquency of each character
+     * @param chars array of characters
+     * @return a hashmap with key the char and value the frequency
+     */
     public static HashMap ferquentie (char[] chars)
     {
         HashMap<Character, Integer> hash = new HashMap<>();
@@ -51,10 +57,27 @@ public class Huffman {
         return hash;
     }
     
-    public static List sorteren(HashMap hash)
+    public static List sorteren(List<HuffKnoop> HuffArray)
     {
-        PriorityQueue<HuffKnoop> pq = new PriorityQueue<>();       
+        PriorityQueue<HuffKnoop> pq = new PriorityQueue<HuffKnoop>();       
+        
+        for(HuffKnoop i: HuffArray)
+        {
+            System.out.println(i.karakter + " : " + i.ferquentie);
+            pq.add(i);
+           
+        }
+        System.out.println(" pq: ");
+        
+        for (int i = 0; i < HuffArray.size(); i++)
+        {
+            HuffKnoop h = pq.poll();
+            System.out.println(h.karakter + " : " + h.ferquentie );
+
+        }
+
         
         return null;
     }
+    
 }

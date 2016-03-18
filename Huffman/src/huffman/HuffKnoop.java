@@ -15,6 +15,7 @@ public class HuffKnoop implements Comparable<HuffKnoop>{
     public int ferquentie;
     public HuffKnoop leftChild, rightChild;
     
+
     
     public HuffKnoop(char karakter, int freq, HuffKnoop left, HuffKnoop right)
     {
@@ -29,6 +30,8 @@ public class HuffKnoop implements Comparable<HuffKnoop>{
     public int compareTo(HuffKnoop other) {
         return Integer.compare(this.ferquentie, other.ferquentie);
     }
+    
+    
     
 }
 
