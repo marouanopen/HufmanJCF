@@ -75,6 +75,11 @@ public class Huffman {
         return pq;
     }
     
+    /**
+     * Zet de boom in elkaar door het assignen van de juiste left en right child
+     * @param sq
+     * @return 
+     */
     public static HuffKnoop bouwBoom(PriorityQueue<HuffKnoop> sq)
     {
         int i = sq.size();
