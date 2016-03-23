@@ -83,6 +83,15 @@ public class Huffman {
     public static HuffKnoop bouwBoom(PriorityQueue<HuffKnoop> sq)
     {
         int i = sq.size();
+        while(sq.size() > 1)
+        {
+            HuffKnoop leftHuff = sq.poll();
+            HuffKnoop rightHuff = sq.poll();
+            HuffKnoop ParentHuff = new HuffKnoop('*', leftHuff.ferquentie + rightHuff.ferquentie, leftHuff, rightHuff);
+            System.out.println("Made Knoop Rightchild: " + ParentHuff.rightChild.karakter + " LeftChild: " + ParentHuff.leftChild.karakter);
+            sq.add(ParentHuff);
+        }
+        /*
         for (int c = 0; c < i; c++)
         {
             HuffKnoop leftHuff = sq.poll();
@@ -92,9 +101,28 @@ public class Huffman {
             HuffKnoop ParentHuff = new HuffKnoop(' ', leftHuff.ferquentie + rightHuff.ferquentie, leftHuff, rightHuff);
             sq.add(ParentHuff);
         }
+        */
         HuffKnoop finalK = sq.poll();
         System.out.println(finalK.ferquentie + " " + finalK.leftChild.toString() + " " + finalK.rightChild.toString());
         return finalK;
     }
     
+    public static HashMap getCharCode(HuffKnoop root, HashMap<Character, String> charMap, String path)
+    {
+        HashMap<Character, String>  charCode = new HashMap<>();
+        // Go left
+        if (root.leftChild != null && root.rightChild != null)
+        {
+           
+           charCode.putAll(getCharCode(root.leftChild, charCode, path += "0"));
+           charCode.putAll(getCharCode(root.rightChild, charCode, path += "1"));
+           
+        }
+        else 
+        {
+            System.out.println(root.karakter + " : " + path);
+            charCode.put(root.karakter, path);
+        }
+        return charCode;
+    }
 }
