@@ -30,7 +30,8 @@ public class Huffman {
             HuffKnoop huff = new HuffKnoop(a,freq.get(a), null, null);
             HuffArray.add(huff);
         }
-        sorteren(HuffArray);
+        PriorityQueue<HuffKnoop> sortedQueue = sorteren(HuffArray);
+        bouwBoom(sortedQueue);
         
     }
     
@@ -57,27 +58,38 @@ public class Huffman {
         return hash;
     }
     
-    public static List sorteren(List<HuffKnoop> HuffArray)
+    /**
+     * Sorts list of huffknoops with priorityQueue
+     * @param HuffArray
+     * @return priorityQueue
+     */
+    public static PriorityQueue<HuffKnoop> sorteren(List<HuffKnoop> HuffArray)
     {
         PriorityQueue<HuffKnoop> pq = new PriorityQueue<HuffKnoop>();       
         
         for(HuffKnoop i: HuffArray)
         {
-            System.out.println(i.karakter + " : " + i.ferquentie);
             pq.add(i);
-           
         }
-        System.out.println(" pq: ");
         
-        for (int i = 0; i < HuffArray.size(); i++)
+        return pq;
+    }
+    
+    public static HuffKnoop bouwBoom(PriorityQueue<HuffKnoop> sq)
+    {
+        int i = sq.size();
+        for (int c = 0; c < i; c++)
         {
-            HuffKnoop h = pq.poll();
-            System.out.println(h.karakter + " : " + h.ferquentie );
-
+            HuffKnoop leftHuff = sq.poll();
+            System.out.println(leftHuff.karakter);
+            HuffKnoop rightHuff = sq.poll();
+            System.out.println(rightHuff.karakter);
+            HuffKnoop ParentHuff = new HuffKnoop(' ', leftHuff.ferquentie + rightHuff.ferquentie, leftHuff, rightHuff);
+            sq.add(ParentHuff);
         }
-
-        
-        return null;
+        HuffKnoop finalK = sq.poll();
+        System.out.println(finalK.ferquentie + " " + finalK.leftChild.toString() + " " + finalK.rightChild.toString());
+        return finalK;
     }
     
 }
