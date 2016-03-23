@@ -18,10 +18,9 @@ public class Huffman {
      */
     public static void main(String[] args) {
         
-        String str = "Lorem ipsum dolor shit mate";
+        String str = "Lorum iPSUM dolor shit mate";
         List<HuffKnoop> HuffArray = new ArrayList<>();
-        char[] karakters = str.toLowerCase().toCharArray(); //args.toString().toCharArray();
- 
+        char[] karakters = str.toLowerCase().toCharArray(); 
         HashMap<Character, Integer> freq = new HashMap<>();
         freq = ferquentie(karakters);
         
@@ -31,8 +30,10 @@ public class Huffman {
             HuffArray.add(huff);
         }
         PriorityQueue<HuffKnoop> sortedQueue = sorteren(HuffArray);
-        bouwBoom(sortedQueue);
-        
+        HashMap<Character, String>  charCode = new HashMap<>();
+        HuffKnoop root = bouwBoom(sortedQueue);
+        charCode = getCharCode(root, charCode, "");
+        System.out.println(decompress(root, compress(str, charCode)));
     }
     
     /**
@@ -82,47 +83,81 @@ public class Huffman {
      */
     public static HuffKnoop bouwBoom(PriorityQueue<HuffKnoop> sq)
     {
-        int i = sq.size();
         while(sq.size() > 1)
         {
-            HuffKnoop leftHuff = sq.poll();
-            HuffKnoop rightHuff = sq.poll();
-            HuffKnoop ParentHuff = new HuffKnoop('*', leftHuff.ferquentie + rightHuff.ferquentie, leftHuff, rightHuff);
-            System.out.println("Made Knoop Rightchild: " + ParentHuff.rightChild.karakter + " LeftChild: " + ParentHuff.leftChild.karakter);
+            HuffKnoop right = sq.poll();
+            HuffKnoop left = sq.poll();
+            HuffKnoop ParentHuff = new HuffKnoop('*', left.ferquentie + right.ferquentie, left, right);
+            //System.out.println("Made Knoop LeftChild: " + ParentHuff.leftChild.karakter + ParentHuff.leftChild.ferquentie + " Rightchild: " + ParentHuff.rightChild.karakter + ParentHuff.rightChild.ferquentie);
             sq.add(ParentHuff);
         }
-        /*
-        for (int c = 0; c < i; c++)
-        {
-            HuffKnoop leftHuff = sq.poll();
-            System.out.println(leftHuff.karakter);
-            HuffKnoop rightHuff = sq.poll();
-            System.out.println(rightHuff.karakter);
-            HuffKnoop ParentHuff = new HuffKnoop(' ', leftHuff.ferquentie + rightHuff.ferquentie, leftHuff, rightHuff);
-            sq.add(ParentHuff);
-        }
-        */
-        HuffKnoop finalK = sq.poll();
-        System.out.println(finalK.ferquentie + " " + finalK.leftChild.toString() + " " + finalK.rightChild.toString());
-        return finalK;
+        return sq.poll();
     }
     
-    public static HashMap getCharCode(HuffKnoop root, HashMap<Character, String> charMap, String path)
+    /**
+     * read the tree
+     * @param root
+     * @param charCode
+     * @param path
+     * @return 
+     */
+    public static HashMap getCharCode(HuffKnoop root, HashMap<Character, String> charCode, String path)
     {
-        HashMap<Character, String>  charCode = new HashMap<>();
         // Go left
         if (root.leftChild != null && root.rightChild != null)
         {
+           charCode.putAll(getCharCode(root.leftChild, charCode, path + "0"));
            
-           charCode.putAll(getCharCode(root.leftChild, charCode, path += "0"));
-           charCode.putAll(getCharCode(root.rightChild, charCode, path += "1"));
-           
+           charCode.putAll(getCharCode(root.rightChild, charCode, path + "1"));
         }
         else 
         {
-            System.out.println(root.karakter + " : " + path);
+            //System.out.println(root.karakter + " : " + path);
             charCode.put(root.karakter, path);
         }
         return charCode;
+    }
+    
+    public static String compress(String toCompress, HashMap<Character, String> key)
+    {
+        String finalmsg = "";
+        for (char ch : toCompress.toLowerCase().toCharArray())
+        {
+            finalmsg += key.get(ch);
+        }
+        //System.out.println(finalmsg);
+        return finalmsg;
+    }
+    
+    public static String decompress(HuffKnoop root, String msg)
+    {
+        String finalMsg = "";
+        HuffKnoop realRoot = root;
+        
+        for (char charazard : msg.toCharArray())
+        {
+                if (charazard == '0')
+                {
+                    //System.out.println("ga naar links");
+                    
+                    root = root.leftChild;
+
+                }
+                else if (charazard == '1')
+                {
+                    //System.out.println("ga naar rechts");
+                    
+                    root = root.rightChild;
+                }
+            
+            if (root.leftChild == null && root.rightChild == null)
+            {
+                //System.out.println("is blaadje: " + root.karakter);
+                finalMsg += root.karakter;
+                root = realRoot;
+            }            
+        }
+        
+        return finalMsg;
     }
 }
