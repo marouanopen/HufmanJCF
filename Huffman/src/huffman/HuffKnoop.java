@@ -15,14 +15,24 @@ public class HuffKnoop implements Comparable<HuffKnoop>{
     public int ferquentie;
     public HuffKnoop leftChild, rightChild;
     
+    
+    
+    //'*', left.ferquentie + right.ferquentie,
+    public HuffKnoop(HuffKnoop left, HuffKnoop right)
+    {
+        karakter = '*';
+        ferquentie = left.ferquentie + right.ferquentie;
+        leftChild = left;
+        rightChild = right;
+    }
 
     
-    public HuffKnoop(char karakter, int freq, HuffKnoop left, HuffKnoop right)
+    public HuffKnoop(char karakter, int freq)
     {
         this.karakter = karakter;
         this.ferquentie = freq;
-        this.leftChild = left;
-        this.rightChild = right;
+        this.leftChild = null;
+        this.rightChild = null;
         
     }   
 

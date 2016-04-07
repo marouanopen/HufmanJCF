@@ -18,15 +18,15 @@ public class Huffman {
      */
     public static void main(String[] args) {
         
-        String str = "Lorum iPSUM dolor shit mate";
+        String str = "aabbccddef";
         List<HuffKnoop> HuffArray = new ArrayList<>();
-        char[] karakters = str.toLowerCase().toCharArray(); 
+        char[] karakters = str.toCharArray(); 
         HashMap<Character, Integer> freq = new HashMap<>();
         freq = ferquentie(karakters);
         
         for (char a : freq.keySet())
         {
-            HuffKnoop huff = new HuffKnoop(a,freq.get(a), null, null);
+            HuffKnoop huff = new HuffKnoop(a,freq.get(a));
             HuffArray.add(huff);
         }
         PriorityQueue<HuffKnoop> sortedQueue = sorteren(HuffArray);
@@ -87,7 +87,7 @@ public class Huffman {
         {
             HuffKnoop right = sq.poll();
             HuffKnoop left = sq.poll();
-            HuffKnoop ParentHuff = new HuffKnoop('*', left.ferquentie + right.ferquentie, left, right);
+            HuffKnoop ParentHuff = new HuffKnoop( left, right);
             //System.out.println("Made Knoop LeftChild: " + ParentHuff.leftChild.karakter + ParentHuff.leftChild.ferquentie + " Rightchild: " + ParentHuff.rightChild.karakter + ParentHuff.rightChild.ferquentie);
             sq.add(ParentHuff);
         }
@@ -112,7 +112,7 @@ public class Huffman {
         }
         else 
         {
-            //System.out.println(root.karakter + " : " + path);
+            System.out.println(root.karakter + " : " + path);
             charCode.put(root.karakter, path);
         }
         return charCode;
@@ -121,11 +121,11 @@ public class Huffman {
     public static String compress(String toCompress, HashMap<Character, String> key)
     {
         String finalmsg = "";
-        for (char ch : toCompress.toLowerCase().toCharArray())
+        for (char ch : toCompress.toCharArray())
         {
             finalmsg += key.get(ch);
         }
-        //System.out.println(finalmsg);
+        System.out.println(finalmsg);
         return finalmsg;
     }
     
