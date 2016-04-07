@@ -29,6 +29,7 @@ public class JCFOpdracht3 extends Application {
         Scene scene = new Scene(root);
         //put the scene on the stage
         primaryStage.setScene(scene);
+        primaryStage.setTitle("JCF Opdracht 3");
         primaryStage.show();
     }
 
