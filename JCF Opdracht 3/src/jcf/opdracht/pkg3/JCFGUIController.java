@@ -37,34 +37,43 @@ public class JCFGUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        TreeItem<String> rootNode = new TreeItem<String>("eSport games");
+        TreeItem<String> rootNode = new TreeItem<>("eSport Games");
         rootNode.setExpanded(true);
-        for(Speler i : createData()){
-            TreeItem<String> item = new TreeItem<String>(i.teamName);
+        List<Speler> spelerList = createData();
+        for(Speler speler : spelerList)          
+        {
+            TreeItem<String> eGame = new TreeItem<>(speler.gameName);
             boolean gevonden = false;
             for(TreeItem<String> gameNode : rootNode.getChildren())
             {
-                if(gameNode.getValue().contentEquals(i.gameName))
+                if(gameNode.getValue().contentEquals(speler.gameName))
                 {
-                    gameNode.getChildren().add(item);
+                    gameNode.getChildren().add(new TreeItem<>(speler.teamName));
                     gevonden = true;
                     break;
                 }
             }
-            if(!lgevonden){
-                TreeItem<String> gameNode = new TreeItem<String>(
-                i.gameName);
-                rootNode.getChildren().add(item);
+            if(!gevonden)
+            {                
+                rootNode.getChildren().add(eGame);
+                eGame.getChildren().add(new TreeItem<>(speler.teamName));                
             }
             
         }
-        BoomZicht.setRoot(rootNode);
-        // TODO
+        BoomZicht.setRoot(rootNode);        
     }
+    /**
+     * Maakt en returnt een lijst met speler data om in de treeview te platsen
+     * @return 
+     */
  public List<Speler> createData() {
         List<Speler> spelers = Arrays.<Speler>asList (
-            new Speler("Smite", "Cloud9", "Baracuda", 10, 0, 12),
-            new Speler("Smite", "Panthera", "incon", 8, 2, 7),
+            new Speler("Smite", "Cloud9", "BaRRaCCuDDa", 10, 0, 12),
+            new Speler("Smite", "Cloud9", "Andinster", 7, 3, 6),
+            new Speler("Smite", "Cloud9", "TheBoosh", 5, 1, 3),
+            new Speler("Smite", "Panthera", "Incon", 8, 2, 7),
+            new Speler("Smite", "Panthera", "SycloneSpin", 25, 0, 3),
+            new Speler("Smite", "Panthera", "Jeff 'The Sex' Hindla", 8, 2, 7),
             new Speler("CS:GO","FNATIC","OlofMeister", 3, 5, 4),
             new Speler("CS:GO","TeamEnvious","Happy", 12, 70, 1));
         return spelers;
